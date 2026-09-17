@@ -1,5 +1,11 @@
-﻿.env
+.env
 venv/
 .venv/
 __pycache__/
 *.pyc
+conversation.db
+*.sqlite
+*.sqlite3
+.pytest_cache/
+.coverage
+htmlcov/

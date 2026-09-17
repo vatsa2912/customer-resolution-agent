@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: customer-resolution-agent
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: AI_PROVIDER
+        value: auto
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FLASK_ENV
+        value: production
