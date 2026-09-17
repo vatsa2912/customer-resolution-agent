@@ -1,13 +1,5 @@
-__pycache__/
-*.py[cod]
-*$py.class
-.venv/
+﻿.env
 venv/
-ENV/
-conversation.db
-*.sqlite
-*.sqlite3
-.env
-.pytest_cache/
-.coverage
-htmlcov/
+.venv/
+__pycache__/
+*.pyc
