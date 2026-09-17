@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AeroResolve AI — Autonomous Customer Resolution System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Global Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="logo-mark">✈</div>
+        <div>
+          <div class="header-pretitle">Autonomous AI Support Prototype</div>
+          <h1 class="header-title">AeroResolve AI Support</h1>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <span class="badge badge-date">📅 Disruption Date: Wed 23 Sep 2026</span>
+        <span class="badge badge-demo">● Simulated Execution (Educational Prototype)</span>
+      </div>
+
+      <div class="header-actions">
+        <div id="ai-status-pill" class="status-pill status-ready" title="AI Provider Status">
+          <span class="status-dot"></span>
+          <span id="ai-provider-text">AI: Initializing...</span>
+        </div>
+        <button id="btn-reset-session" class="btn btn-secondary btn-sm" title="Clear current customer chat history">
+          🔄 Reset Session
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <div class="workspace-grid">
+      <!-- Left Sidebar: Customer & Flight Context -->
+      <aside class="sidebar-panel">
+        <div class="panel-section-title">
+          <span>Active Customer</span>
+          <span class="info-pill">Strict PDF Data</span>
+        </div>
+
+        <div class="customer-picker">
+          <label for="customer-select" class="form-label">Select Customer Profile</label>
+          <select id="customer-select" class="form-select">
+            <option value="priya">Priya Nair — Gold Tier (Cancelled)</option>
+            <option value="arvind">Arvind Kulkarni — Silver Tier (4h Delay)</option>
+            <option value="meher">Meher Kaur — Platinum Tier (6h Delay)</option>
+          </select>
+        </div>
+
+        <!-- Dynamic Profile Card -->
+        <div id="profile-card" class="card profile-card">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Flight Disruption Card -->
+        <div id="flight-card" class="card flight-card">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Quick Scenario Test Presets -->
+        <div class="scenario-section">
+          <div class="panel-section-title">
+            <span>Assignment 3 Scenarios</span>
+          </div>
+          <div class="scenario-buttons">
+            <button class="scenario-btn" data-scenario="scenario1" title="Priya: Cancelled flight + Furious + Business upgrade demand">
+              <span class="scenario-num">1</span>
+              <span class="scenario-desc"><strong>Priya:</strong> Cancelled + Angry + Business Upgrade</span>
+            </button>
+
+            <button class="scenario-btn" data-scenario="scenario2" title="Arvind: 4h Delay + Missed meeting + Hotel demand">
+              <span class="scenario-num">2</span>
+              <span class="scenario-desc"><strong>Arvind:</strong> 4h Delay + Hotel Request</span>
+            </button>
+
+            <button class="scenario-btn" data-scenario="scenario3" title="Meher: 6h Delay + Full night hotel + ₹2,000 fare waiver">
+              <span class="scenario-num">3</span>
+              <span class="scenario-desc"><strong>Meher:</strong> 6h Delay + Full Hotel + ₹2,000 Waiver</span>
+            </button>
+
+            <button class="scenario-btn edge-btn" data-scenario="legal" title="Mandatory immediate escalation test">
+              <span class="scenario-num">⚖️</span>
+              <span class="scenario-desc"><strong>Edge Case:</strong> Legal Threat & Formal Complaint</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Panel: Chat Stream -->
+      <main class="chat-panel">
+        <div class="chat-header">
+          <div class="chat-header-info">
+            <h2 id="chat-customer-name" class="chat-title">Customer Support Chat</h2>
+            <span id="chat-booking-tag" class="chat-pnr-tag">PNR: --</span>
+          </div>
+          <div class="chat-policy-pill">
+            <span class="policy-indicator">🛡️ Policy Guardrails Active</span>
+          </div>
+        </div>
+
+        <!-- Message Stream -->
+        <div id="chat-messages" class="chat-stream">
+          <!-- Dynamic Messages -->
+        </div>
+
+        <!-- Typing Indicator -->
+        <div id="typing-indicator" class="typing-indicator hidden">
+          <div class="agent-avatar-small">✈</div>
+          <div class="typing-bubble">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+          <span class="typing-text">Agent evaluating policy rules...</span>
+        </div>
+
+        <!-- Message Composer -->
+        <div class="chat-composer-area">
+          <form id="chat-form" class="chat-form">
+            <textarea
+              id="chat-input"
+              rows="2"
+              placeholder="Type customer's message (e.g. 'I want a refund', 'Can you waive the ₹2,000 difference?', 'Yes, please proceed')..."
+              required
+            ></textarea>
+            <button type="submit" id="btn-send" class="btn btn-primary btn-send">
+              <span>Send</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
+          </form>
+          <div class="composer-footnote">
+            <span>💡 Press <strong>Enter</strong> to send, <strong>Shift + Enter</strong> for newline. Irreversible actions require explicit customer confirmation.</span>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right Panel: Telemetry & Inspector Tabs -->
+      <aside class="inspector-panel">
+        <div class="inspector-tabs">
+          <button class="tab-btn active" data-tab="actions">Actions (<span id="count-actions">0</span>)</button>
+          <button class="tab-btn" data-tab="escalations">Escalations (<span id="count-escalations">0</span>)</button>
+          <button class="tab-btn" data-tab="reasoning">Reasoning</button>
+          <button class="tab-btn" data-tab="policies">Policies</button>
+        </div>
+
+        <!-- Tab 1: Actions Record -->
+        <div id="tab-actions" class="tab-content active">
+          <div class="tab-pane-header">
+            <h3>Action Records</h3>
+            <span class="subtext">SQLite Action Lifecycle</span>
+          </div>
+          <div id="actions-list" class="items-list">
+            <div class="empty-state">No actions recorded yet.</div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Escalations Center -->
+        <div id="tab-escalations" class="tab-content">
+          <div class="tab-pane-header">
+            <h3>Supervisor Queue</h3>
+            <span class="subtext">Human Escalation Tickets</span>
+          </div>
+          <div id="escalations-list" class="items-list">
+            <div class="empty-state">No escalations created yet.</div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Agent Reasoning & Guardrails -->
+        <div id="tab-reasoning" class="tab-content">
+          <div class="tab-pane-header">
+            <h3>Decision Telemetry</h3>
+            <span class="subtext">AI Intent & Policy Synthesis</span>
+          </div>
+          <div id="reasoning-container" class="telemetry-box">
+            <div class="telemetry-item">
+              <span class="tel-label">Active Provider:</span>
+              <span id="tel-provider" class="tel-value">--</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="tel-label">Model:</span>
+              <span id="tel-model" class="tel-value">--</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="tel-label">Extracted Intent:</span>
+              <span id="tel-intent" class="tel-value badge-pill">--</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="tel-label">Customer Emotion:</span>
+              <span id="tel-emotion" class="tel-value badge-pill">--</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="tel-label">Decision Outcome:</span>
+              <span id="tel-decision" class="tel-value">--</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="tel-label">Policies Grounded:</span>
+              <div id="tel-policies" class="policy-tag-group">None</div>
+            </div>
+            <div class="telemetry-card">
+              <div class="tel-card-title">Policy Rationale:</div>
+              <p id="tel-rationale" class="tel-card-text">Send a message to view the agent's deterministic guardrail evaluation.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Policy Knowledge Base -->
+        <div id="tab-policies" class="tab-content">
+          <div class="tab-pane-header">
+            <h3>Ground Truth Policies</h3>
+            <span class="subtext">Assignment 3 PDF Rules</span>
+          </div>
+          <div id="policies-list" class="items-list">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
